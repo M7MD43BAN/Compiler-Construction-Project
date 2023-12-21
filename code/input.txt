@@ -1,0 +1,43 @@
+# Hello World
+# This program written by Mohamed Shaban
+
+Main() {
+	PRINT(5);
+	x = 5;
+	y = 10;
+
+	IF(5 < 2)
+	{
+		15 - 30;
+	}
+	ELSE
+	{
+		20 + 9;
+	}
+
+	IF(13 < 28)
+	{
+		100 - 1;
+	}
+
+	WHILE (0 < 5)
+	{
+		99 + 1;
+	}
+
+	FOR (2, 20, 2)
+	{
+		23 + 6;
+	}
+
+	SWITCH (2)
+	{
+		CASE 1 : 10 + 20;
+
+		CASE 2 : 33 - 19;
+
+		CASE 3 : 9 - 15;
+
+		DEFAULT : 22 - 15;
+	}
+}

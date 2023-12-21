@@ -1,0 +1,26 @@
+# Hello World# This program written by Mohamed Shaban
+Print 5
+Value of the variable: 5
+Value of the variable: 10
+value of expression in ELSE: 29
+value of expression in IF: 99
+While loop: 0 expression value: 100
+While loop: 1 expression value: 100
+While loop: 2 expression value: 100
+While loop: 3 expression value: 100
+While loop: 4 expression value: 100
+For loop: 2 expression value : 29
+For loop: 4 expression value : 29
+For loop: 6 expression value : 29
+For loop: 8 expression value : 29
+For loop: 10 expression value : 29
+For loop: 12 expression value : 29
+For loop: 14 expression value : 29
+For loop: 16 expression value : 29
+For loop: 18 expression value : 29
+Case No : 1 & expression value :30 
+Case No : 2 & expression value :14 
+Case No : 3 & expression value :-6 
+
+Default case -> : 7
+Case number -> 2
