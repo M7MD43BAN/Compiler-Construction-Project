@@ -1,26 +1,35 @@
-# Hello World# This program written by Mohamed Shaban
-Print 5
-Value of the variable: 5
-Value of the variable: 10
-value of expression in ELSE: 29
-value of expression in IF: 99
-While loop: 0 expression value: 100
-While loop: 1 expression value: 100
-While loop: 2 expression value: 100
-While loop: 3 expression value: 100
-While loop: 4 expression value: 100
-For loop: 2 expression value : 29
-For loop: 4 expression value : 29
-For loop: 6 expression value : 29
-For loop: 8 expression value : 29
-For loop: 10 expression value : 29
-For loop: 12 expression value : 29
-For loop: 14 expression value : 29
-For loop: 16 expression value : 29
-For loop: 18 expression value : 29
-Case No : 1 & expression value :30 
-Case No : 2 & expression value :14 
-Case No : 3 & expression value :-6 
 
-Default case -> : 7
-Case number -> 2
+Main Function Start
+
+Single line comment found :: # Hello World
+Single line comment found :: # This program is written by Mohamed Shaban
+Print 25
+number1 >>  Value of the variable : 5
+number2 >>  Value of the variable : 10
+
+bool declaration: character
+interger declaration: number3
+double declaration: number4
+float declaration: number5
+char declaration: boolean1value of expression in ELSE: 29
+value of expression in IF: 99
+While loop 0: 100
+While loop 1: 100
+While loop 2: 100
+While loop 3: 100
+While loop 4: 100
+While loop:  100
+For loop 2: 29
+For loop 4: 29
+For loop 6: 29
+For loop 8: 29
+For loop 10: 29
+For loop 12: 29
+For loop 14: 29
+For loop 16: 29
+For loop 18: 29
+For loop:  29
+No matching case found for value: 9
+Value of the default case: 7
+
+Main Function End

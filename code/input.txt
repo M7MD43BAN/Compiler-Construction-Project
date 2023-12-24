@@ -1,10 +1,15 @@
 # Hello World
-# This program written by Mohamed Shaban
+# This program is written by Mohamed Shaban
 
 Main() {
 	PRINT(5);
-	x = 5;
-	y = 10;
+	number1 = 5;
+	number2 = 10;
+	CHAR character;
+	INT number3;
+	DOUBLE number4;
+	FLOAT number5;
+	BOOL boolean1;
 
 	IF(5 < 2)
 	{
@@ -30,13 +35,15 @@ Main() {
 		23 + 6;
 	}
 
-	SWITCH (2)
+	SWITCH (9)
 	{
 		CASE 1 : 10 + 20;
 
 		CASE 2 : 33 - 19;
 
 		CASE 3 : 9 - 15;
+
+		CASE 4 : 10 + 100;
 
 		DEFAULT : 22 - 15;
 	}

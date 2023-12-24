@@ -69,17 +69,26 @@
 /* First part of user prologue.  */
 #line 1 "main.y"
 
-	#include<stdio.h>
-	#include<stdlib.h>
-	#include<math.h>
+	#include <stdio.h>
+	#include <stdlib.h>
+	#include <math.h>
+	#include <string.h>
+
+	typedef struct {
+		int caseValue;
+		int expressionValue;
+	} SwitchCase;
+
 	int yylex(void);
 	void yyerror(char *);
 	extern FILE *yyin;
 	extern FILE *yyout;
 	FILE *yyError;
-	int sym[26];
+	int sym[1000];
+	SwitchCase *switchCases; // Array to store switch cases
+	int switchCasesCount = 0; // Number of switch cases
 
-#line 83 "main.tab.c"
+#line 92 "main.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -542,9 +551,9 @@ union yyalloc
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  12
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  38
+#define YYNRULES  39
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  104
+#define YYNSTATES  105
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   275
@@ -595,10 +604,10 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    25,    25,    28,    29,    32,    33,    35,    39,    44,
-      51,    60,    69,    73,    77,    86,    93,    94,    95,    96,
-     101,   102,   105,   106,   109,   110,   113,   117,   122,   124,
-     126,   131,   136,   141,   152,   163,   168,   173,   178
+       0,    34,    34,    37,    38,    40,    41,    42,    45,    50,
+      57,    65,    73,    76,    97,   106,   109,   110,   111,   112,
+     113,   116,   117,   120,   121,   124,   125,   128,   137,   142,
+     143,   144,   147,   150,   153,   162,   171,   174,   177,   180
 };
 #endif
 
@@ -645,16 +654,16 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 static const yytype_int16 yypact[] =
 {
       -2,   -19,    11,   -14,   -33,    -4,   -33,    23,   -33,    -7,
-     -12,   -33,   -33,   -33,   -33,   -33,   -11,     2,     3,     7,
-       9,   -33,   -33,    12,    38,    59,     9,     9,    41,    43,
-       9,    44,   -33,    73,   -33,   -33,    17,     9,     9,     9,
-       9,     9,     9,   -33,     9,     9,    87,   101,    18,    30,
-     115,    28,   -33,    57,   161,   161,   163,   163,   -32,   -32,
-     157,   157,   -33,    51,    60,    69,    45,    63,   -33,    50,
-      42,    58,   -33,   -33,    64,    84,    76,    77,   -15,    94,
-      62,    50,   -33,    99,    71,   -33,   -33,    91,    92,   100,
-      83,     9,    50,    50,   -33,     9,   129,   103,   104,   143,
-     -33,   -33,   -33,   -33
+     -12,   -33,   -33,   -33,   -33,   -33,   -33,   -11,     2,     3,
+      14,     9,   -33,   -33,    13,    40,    59,     9,     9,    43,
+      44,     9,    45,   -33,    73,   -33,   -33,    18,     9,     9,
+       9,     9,     9,     9,   -33,     9,     9,    87,   101,    20,
+      35,   115,    36,   -33,    68,   161,   161,   163,   163,   -32,
+     -32,   157,   157,   -33,    60,    71,    75,    34,    63,   -33,
+      50,    55,    61,   -33,   -33,    76,    84,    78,    86,   -15,
+      96,    77,    50,   -33,   100,    72,   -33,   -33,   102,   104,
+     105,    82,     9,    50,    50,   -33,     9,   129,   114,   116,
+     143,   -33,   -33,   -33,   -33
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -662,31 +671,31 @@ static const yytype_int16 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     0,     1,     0,     3,     0,    28,    29,
-       0,    16,    17,    19,    18,     2,     0,     0,     0,     0,
-       0,     5,     4,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,    29,     0,     6,    21,    15,     0,     0,     0,
-       0,     0,     0,     7,     0,     0,     0,     0,     0,     0,
-       0,     0,    38,     0,    36,    37,    30,    31,    32,    33,
-      34,    35,     8,     0,     0,     0,     0,     0,    20,     0,
-       0,     0,    12,    24,     0,     0,     0,     0,    22,    10,
-       0,     0,    13,     0,     0,    25,    23,     0,     0,     0,
-       0,     0,     0,     0,     9,     0,     0,     0,     0,     0,
-      27,    11,    14,    26
+       0,     0,     0,     0,     1,     0,     3,     0,    29,    30,
+       0,    16,    17,    19,    20,    18,     2,     0,     0,     0,
+       0,     0,     5,     4,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,    30,     0,     6,    22,    15,     0,     0,
+       0,     0,     0,     0,     7,     0,     0,     0,     0,     0,
+       0,     0,     0,    39,     0,    37,    38,    31,    32,    33,
+      34,    35,    36,     8,     0,     0,     0,     0,     0,    21,
+       0,     0,     0,    12,    25,     0,     0,     0,     0,    23,
+      10,     0,     0,    13,     0,     0,    26,    24,     0,     0,
+       0,     0,     0,     0,     0,     9,     0,     0,     0,     0,
+       0,    28,    11,    14,    27
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -33,   -33,   -33,   -24,   -33,   -33,   -33,   -33,   -33,   -33,
-     -33,   -20
+     -33,   -33,   -33,   -25,   -33,   -33,   -33,   -33,   -33,   -33,
+     -33,   -21
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     7,    22,    23,    24,    36,    77,    78,    85,
-      86,    25
+       0,     2,     7,    23,    24,    25,    37,    78,    79,    86,
+      87,    26
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -694,44 +703,44 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      33,    44,    45,    83,    84,     1,    46,    47,     3,     6,
-      50,     4,     8,    32,     5,    27,    28,    54,    55,    56,
-      57,    58,    59,    26,    60,    61,     8,     9,    10,    29,
-      30,    11,    12,    13,    31,    14,    20,    15,    16,    17,
-      18,    34,    35,    19,    48,    74,    49,    51,    53,    64,
-      20,    65,    21,     8,     9,    10,    67,    89,    11,    12,
-      13,    68,    14,    70,    69,    16,    17,    18,    97,    98,
-      19,    96,    71,    75,    72,    99,    73,    20,    79,    21,
-      37,    38,    39,    40,    41,    42,    76,    80,    43,    81,
-      88,    82,    44,    45,    37,    38,    39,    40,    41,    42,
-      87,    52,    90,    91,    92,    93,    44,    45,    37,    38,
-      39,    40,    41,    42,    94,    95,    62,   101,   102,     0,
-      44,    45,    37,    38,    39,    40,    41,    42,     0,    63,
-       0,     0,     0,     0,    44,    45,    37,    38,    39,    40,
-      41,    42,     0,    66,     0,     0,     0,     0,    44,    45,
-      37,    38,    39,    40,    41,    42,     0,     0,   100,     0,
-       0,     0,    44,    45,    37,    38,    39,    40,    41,    42,
-       0,     0,   103,     0,     0,     0,    44,    45,    37,    38,
-      39,    40,    41,    42,    39,    40,    41,    42,    41,    42,
-      44,    45,     0,     0,    44,    45,    44,    45
+      34,    45,    46,    84,    85,     1,    47,    48,     3,     6,
+      51,     4,     8,    33,     5,    28,    29,    55,    56,    57,
+      58,    59,    60,    27,    61,    62,     8,     9,    10,    30,
+      31,    11,    12,    13,    14,    15,    21,    16,    17,    18,
+      19,    32,    35,    20,    36,    75,    49,    50,    52,    54,
+      21,    65,    22,     8,     9,    10,    66,    90,    11,    12,
+      13,    14,    15,    73,    68,    17,    18,    19,    98,    99,
+      20,    97,    69,    70,    71,   100,    74,    21,    72,    22,
+      38,    39,    40,    41,    42,    43,    76,    81,    44,    77,
+      80,    82,    45,    46,    38,    39,    40,    41,    42,    43,
+      83,    53,    88,    91,    92,    89,    45,    46,    38,    39,
+      40,    41,    42,    43,    96,    93,    63,    94,     0,    95,
+      45,    46,    38,    39,    40,    41,    42,    43,   102,    64,
+     103,     0,     0,     0,    45,    46,    38,    39,    40,    41,
+      42,    43,     0,    67,     0,     0,     0,     0,    45,    46,
+      38,    39,    40,    41,    42,    43,     0,     0,   101,     0,
+       0,     0,    45,    46,    38,    39,    40,    41,    42,    43,
+       0,     0,   104,     0,     0,     0,    45,    46,    38,    39,
+      40,    41,    42,    43,    40,    41,    42,    43,    42,    43,
+      45,    46,     0,     0,    45,    46,    45,    46
 };
 
 static const yytype_int8 yycheck[] =
 {
-      20,    33,    34,    18,    19,     7,    26,    27,    27,    13,
-      30,     0,     3,     4,    28,    27,    27,    37,    38,    39,
-      40,    41,    42,    30,    44,    45,     3,     4,     5,    27,
-      27,     8,     9,    10,    27,    12,    27,    14,    15,    16,
-      17,    29,     4,    20,     3,    69,     3,     3,    31,    31,
-      27,    21,    29,     3,     4,     5,    28,    81,     8,     9,
-      10,     4,    12,     3,    13,    15,    16,    17,    92,    93,
-      20,    91,     3,    31,    29,    95,    13,    27,    14,    29,
-      21,    22,    23,    24,    25,    26,    28,     3,    29,    13,
-      28,    14,    33,    34,    21,    22,    23,    24,    25,    26,
-       6,    28,     3,    32,    13,    13,    33,    34,    21,    22,
-      23,    24,    25,    26,    14,    32,    29,    14,    14,    -1,
-      33,    34,    21,    22,    23,    24,    25,    26,    -1,    28,
-      -1,    -1,    -1,    -1,    33,    34,    21,    22,    23,    24,
+      21,    33,    34,    18,    19,     7,    27,    28,    27,    13,
+      31,     0,     3,     4,    28,    27,    27,    38,    39,    40,
+      41,    42,    43,    30,    45,    46,     3,     4,     5,    27,
+      27,     8,     9,    10,    11,    12,    27,    14,    15,    16,
+      17,    27,    29,    20,     4,    70,     3,     3,     3,    31,
+      27,    31,    29,     3,     4,     5,    21,    82,     8,     9,
+      10,    11,    12,    29,    28,    15,    16,    17,    93,    94,
+      20,    92,     4,    13,     3,    96,    13,    27,     3,    29,
+      21,    22,    23,    24,    25,    26,    31,     3,    29,    28,
+      14,    13,    33,    34,    21,    22,    23,    24,    25,    26,
+      14,    28,     6,     3,    32,    28,    33,    34,    21,    22,
+      23,    24,    25,    26,    32,    13,    29,    13,    -1,    14,
+      33,    34,    21,    22,    23,    24,    25,    26,    14,    28,
+      14,    -1,    -1,    -1,    33,    34,    21,    22,    23,    24,
       25,    26,    -1,    28,    -1,    -1,    -1,    -1,    33,    34,
       21,    22,    23,    24,    25,    26,    -1,    -1,    29,    -1,
       -1,    -1,    33,    34,    21,    22,    23,    24,    25,    26,
@@ -745,16 +754,16 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     7,    36,    27,     0,    28,    13,    37,     3,     4,
-       5,     8,     9,    10,    12,    14,    15,    16,    17,    20,
-      27,    29,    38,    39,    40,    46,    30,    27,    27,    27,
-      27,    27,     4,    46,    29,     4,    41,    21,    22,    23,
-      24,    25,    26,    29,    33,    34,    46,    46,     3,     3,
-      46,     3,    28,    31,    46,    46,    46,    46,    46,    46,
-      46,    46,    29,    28,    31,    21,    28,    28,     4,    13,
-       3,     3,    29,    13,    38,    31,    28,    42,    43,    14,
-       3,    13,    14,    18,    19,    44,    45,     6,    28,    38,
-       3,    32,    13,    13,    14,    32,    46,    38,    38,    46,
-      29,    14,    14,    29
+       5,     8,     9,    10,    11,    12,    14,    15,    16,    17,
+      20,    27,    29,    38,    39,    40,    46,    30,    27,    27,
+      27,    27,    27,     4,    46,    29,     4,    41,    21,    22,
+      23,    24,    25,    26,    29,    33,    34,    46,    46,     3,
+       3,    46,     3,    28,    31,    46,    46,    46,    46,    46,
+      46,    46,    46,    29,    28,    31,    21,    28,    28,     4,
+      13,     3,     3,    29,    13,    38,    31,    28,    42,    43,
+      14,     3,    13,    14,    18,    19,    44,    45,     6,    28,
+      38,     3,    32,    13,    13,    14,    32,    46,    38,    38,
+      46,    29,    14,    14,    29
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -762,8 +771,8 @@ static const yytype_int8 yyr1[] =
 {
        0,    35,    36,    37,    37,    38,    38,    38,    38,    38,
       38,    38,    38,    38,    38,    39,    40,    40,    40,    40,
-      41,    41,    42,    42,    43,    43,    44,    45,    46,    46,
-      46,    46,    46,    46,    46,    46,    46,    46,    46
+      40,    41,    41,    42,    42,    43,    43,    44,    45,    46,
+      46,    46,    46,    46,    46,    46,    46,    46,    46,    46
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -771,8 +780,8 @@ static const yytype_int8 yyr2[] =
 {
        0,     2,     6,     0,     2,     1,     2,     2,     4,     9,
        7,    11,     5,     7,    11,     2,     1,     1,     1,     1,
-       3,     1,     1,     2,     0,     2,     5,     4,     1,     1,
-       3,     3,     3,     3,     3,     3,     3,     3,     3
+       1,     3,     1,     1,     2,     0,     2,     5,     4,     1,
+       1,     3,     3,     3,     3,     3,     3,     3,     3,     3
 };
 
 
@@ -1235,252 +1244,254 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* program: MAIN '(' ')' BRACKETSTART line BRACKETEND  */
-#line 25 "main.y"
-                                                    { printf("Main Function END\n"); }
-#line 1242 "main.tab.c"
-    break;
-
-  case 6: /* statement: declaration ';'  */
-#line 33 "main.y"
-                                { printf("Declaration\n"); }
-#line 1248 "main.tab.c"
-    break;
-
   case 7: /* statement: expression ';'  */
-#line 35 "main.y"
+#line 42 "main.y"
                                 {
-		printf("\nvalue of expression: %d\n", yyvsp[-1]); yyval = yyvsp[-1];
+		yyval = yyvsp[-1];
 	}
-#line 1256 "main.tab.c"
+#line 1253 "main.tab.c"
     break;
 
   case 8: /* statement: VAR '=' expression ';'  */
-#line 39 "main.y"
+#line 45 "main.y"
                                         {
-		fprintf(yyout, "Value of the variable: %d\n", yyvsp[-1]);
+		fprintf(yyout, " >>  Value of the variable : %d\n", yyvsp[-1]);
 		sym[yyvsp[-3]] = yyvsp[-1];
+		yyval = yyvsp[-1];
 	}
-#line 1265 "main.tab.c"
+#line 1263 "main.tab.c"
     break;
 
   case 9: /* statement: WHILE '(' NUM '<' NUM ')' BRACKETSTART statement BRACKETEND  */
-#line 44 "main.y"
+#line 50 "main.y"
                                                                        {
-	    int i;
-	    for(i = yyvsp[-6]; i < yyvsp[-4]; i++) {
-			fprintf(yyout, "While loop: %d expression value: %d\n", i, yyvsp[-1]);
+		int i;
+		for (i = yyvsp[-6]; i < yyvsp[-4]; i++) {
+			fprintf(yyout, "While loop %d: %d\n", i, yyvsp[-1]);
 		}
+		fprintf(yyout, "While loop:  %d\n", yyvsp[-1]);
 	}
-#line 1276 "main.tab.c"
+#line 1275 "main.tab.c"
     break;
 
   case 10: /* statement: IF '(' expression ')' BRACKETSTART statement BRACKETEND  */
-#line 51 "main.y"
+#line 57 "main.y"
                                                                         {
-		if(yyvsp[-4]) {
+		if (yyvsp[-4]) {
 			fprintf(yyout, "value of expression in IF: %d\n", yyvsp[-1]);
 		}
 		else {
 			fprintf(yyout, "condition value zero in IF block\n");
 		}
 	}
-#line 1289 "main.tab.c"
+#line 1288 "main.tab.c"
     break;
 
   case 11: /* statement: IF '(' expression ')' BRACKETSTART statement BRACKETEND ELSE BRACKETSTART statement BRACKETEND  */
-#line 60 "main.y"
+#line 65 "main.y"
                                                                                                                 {
-		if(yyvsp[-8]) {
+		if (yyvsp[-8]) {
 			fprintf(yyout, "value of expression in IF: %d\n", yyvsp[-5]);
 		}
 		else {
 			fprintf(yyout, "value of expression in ELSE: %d\n", yyvsp[-1]);
 		}
 	}
-#line 1302 "main.tab.c"
+#line 1301 "main.tab.c"
     break;
 
   case 12: /* statement: PRINT '(' expression ')' ';'  */
-#line 69 "main.y"
+#line 73 "main.y"
                                         {
 		fprintf(yyout, "\nPrint %d\n", yyvsp[-2]);
 	}
-#line 1310 "main.tab.c"
+#line 1309 "main.tab.c"
     break;
 
   case 13: /* statement: SWITCH '(' NUM ')' BRACKETSTART SWITCHCASE BRACKETEND  */
-#line 73 "main.y"
+#line 76 "main.y"
                                                                 {
-		fprintf(yyout, "Case number -> %d\n", yyvsp[-4]);
+		int switchValue = yyvsp[-4];
+		int matched = 0;
+
+		// Check each case dynamically
+		int i;
+		for (i = 0; i < switchCasesCount; i++) {
+			if (switchCases[i].caseValue == switchValue) {
+				fprintf(yyout, "Case matched : %d\n", switchValue);
+				fprintf(yyout, "Value of the matched case: %d\n", switchCases[i].expressionValue);
+				matched = 1;
+				break;
+			}
+		}
+
+		// Print default value if no matching case is found
+		if (!matched) {
+			fprintf(yyout, "No matching case found for value: %d\n", switchValue);
+			fprintf(yyout, "Value of the default case: %d\n", sym[0]); // Adjust if needed
+		}
 	}
-#line 1318 "main.tab.c"
+#line 1335 "main.tab.c"
     break;
 
   case 14: /* statement: FOR '(' NUM ',' NUM ',' NUM ')' BRACKETSTART statement BRACKETEND  */
-#line 77 "main.y"
+#line 97 "main.y"
                                                                                 {
-	    int i;
-	    for(i = yyvsp[-8]; i < yyvsp[-6]; i = i + yyvsp[-4] ) {
-			fprintf(yyout, "For loop: %d expression value : %d\n", i, yyvsp[-1]);
+		int i;
+		for (i = yyvsp[-8]; i < yyvsp[-6]; i = i + yyvsp[-4]) {
+			fprintf(yyout, "For loop %d: %d\n", i, yyvsp[-1]);
 		}
+		fprintf(yyout, "For loop:  %d\n", yyvsp[-1]);
 	}
-#line 1329 "main.tab.c"
-    break;
-
-  case 15: /* declaration: TYPE ID1  */
-#line 86 "main.y"
-                       {
-		printf("\nvariable Declaration\n");
-		printf("\n.........................................\n");
-	}
-#line 1338 "main.tab.c"
+#line 1347 "main.tab.c"
     break;
 
   case 16: /* TYPE: INT  */
-#line 93 "main.y"
-                { printf("interger declaration\n"); }
-#line 1344 "main.tab.c"
+#line 109 "main.y"
+                { fprintf(yyout, "\ninterger declaration: "); }
+#line 1353 "main.tab.c"
     break;
 
   case 17: /* TYPE: FLOAT  */
-#line 94 "main.y"
-                { printf("float declaration\n"); }
-#line 1350 "main.tab.c"
+#line 110 "main.y"
+                        { fprintf(yyout, "\nfloat declaration: "); }
+#line 1359 "main.tab.c"
     break;
 
   case 18: /* TYPE: CHAR  */
-#line 95 "main.y"
-                { printf("char declaration\n"); }
-#line 1356 "main.tab.c"
+#line 111 "main.y"
+                        { fprintf(yyout, "\nchar declaration: "); }
+#line 1365 "main.tab.c"
     break;
 
   case 19: /* TYPE: DOUBLE  */
-#line 96 "main.y"
-                    { printf("double declaration\n"); }
-#line 1362 "main.tab.c"
+#line 112 "main.y"
+                        { fprintf(yyout, "\ndouble declaration: "); }
+#line 1371 "main.tab.c"
     break;
 
-  case 26: /* casenumber: CASE NUM ':' expression ';'  */
+  case 20: /* TYPE: BOOL  */
 #line 113 "main.y"
-                                        {
-				fprintf(yyout, "Case No : %d & expression value :%d \n", yyvsp[-3], yyvsp[-1]);
-			}
-#line 1370 "main.tab.c"
+                        { fprintf(yyout, "\nbool declaration: "); }
+#line 1377 "main.tab.c"
     break;
 
-  case 27: /* defaultgrammer: DEFAULT ':' expression ';'  */
-#line 117 "main.y"
+  case 27: /* casenumber: CASE NUM ':' expression ';'  */
+#line 128 "main.y"
+                                        {
+    if (switchCasesCount < 1000) {
+        switchCases[switchCasesCount].caseValue = yyvsp[-3];
+        switchCases[switchCasesCount].expressionValue = yyvsp[-1];
+        switchCasesCount++;
+    }
+}
+#line 1389 "main.tab.c"
+    break;
+
+  case 28: /* defaultgrammer: DEFAULT ':' expression ';'  */
+#line 137 "main.y"
                                            {
- 				fprintf(yyout, "\nDefault case -> : %d\n", yyvsp[-1]);
-			}
-#line 1378 "main.tab.c"
+    sym[0] = yyvsp[-1]; // Store the value in sym for the default case
+}
+#line 1397 "main.tab.c"
     break;
 
-  case 28: /* expression: NUM  */
-#line 122 "main.y"
-                                                { yyval = yyvsp[0]; }
-#line 1384 "main.tab.c"
+  case 29: /* expression: NUM  */
+#line 142 "main.y"
+                                   { yyval = yyvsp[0]; }
+#line 1403 "main.tab.c"
     break;
 
-  case 29: /* expression: VAR  */
-#line 124 "main.y"
-                                                        { yyval = sym[yyvsp[0]]; }
-#line 1390 "main.tab.c"
+  case 30: /* expression: VAR  */
+#line 143 "main.y"
+                                 { yyval = sym[yyvsp[0]]; }
+#line 1409 "main.tab.c"
     break;
 
-  case 30: /* expression: expression '+' expression  */
-#line 126 "main.y"
-                                        {
-		printf("\nAddition : %d + %d = %d \n", yyvsp[-2], yyvsp[0], yyvsp[-2] + yyvsp[0]);
-		yyval = yyvsp[-2] + yyvsp[0];
-	}
-#line 1399 "main.tab.c"
-    break;
-
-  case 31: /* expression: expression '-' expression  */
-#line 131 "main.y"
-                                        {
-		printf("\nSubtraction : %d - %d = %d \n", yyvsp[-2], yyvsp[0], yyvsp[-2] - yyvsp[0]);
-		 yyval = yyvsp[-2] - yyvsp[0];
-	}
-#line 1408 "main.tab.c"
-    break;
-
-  case 32: /* expression: expression '*' expression  */
-#line 136 "main.y"
-                                        {
-		printf("\nMultiplication : %d * %d \n", yyvsp[-2], yyvsp[0], yyvsp[-2] * yyvsp[0]);
-		yyval = yyvsp[-2] * yyvsp[0];
-	}
+  case 31: /* expression: expression '+' expression  */
+#line 144 "main.y"
+                                   {
+        yyval = yyvsp[-2] + yyvsp[0];
+    }
 #line 1417 "main.tab.c"
     break;
 
-  case 33: /* expression: expression '/' expression  */
-#line 141 "main.y"
-                                        {
-		if(yyvsp[0]){
-			printf("\nDivision : %d / %d \n ", yyvsp[-2], yyvsp[0], yyvsp[-2] / yyvsp[0]);
-			yyval = yyvsp[-2] / yyvsp[0];
-		}
-		else{
-			yyval = 0;
-			printf("\nDivision by zero\n\t");
-		}
-	}
-#line 1432 "main.tab.c"
+  case 32: /* expression: expression '-' expression  */
+#line 147 "main.y"
+                                   {
+        yyval = yyvsp[-2] - yyvsp[0];
+    }
+#line 1425 "main.tab.c"
     break;
 
-  case 34: /* expression: expression '%' expression  */
-#line 152 "main.y"
-                                        {
-		if(yyvsp[0]) {
-			printf("\nMod : %d % %d \n", yyvsp[-2], yyvsp[0], yyvsp[-2] % yyvsp[0]);
-			yyval = yyvsp[-2] % yyvsp[0];
-		}
-		else {
-			yyval = 0;
-			printf("\nMOD by zero\n");
-		}
-	}
+  case 33: /* expression: expression '*' expression  */
+#line 150 "main.y"
+                                   {
+        yyval = yyvsp[-2] * yyvsp[0];
+    }
+#line 1433 "main.tab.c"
+    break;
+
+  case 34: /* expression: expression '/' expression  */
+#line 153 "main.y"
+                                   {
+        if (yyvsp[0]) {
+            yyval = yyvsp[-2] / yyvsp[0];
+        }
+        else {
+            yyval = 0;
+			yyerror("Error!, Division by 0!!");
+        }
+    }
 #line 1447 "main.tab.c"
     break;
 
-  case 35: /* expression: expression '^' expression  */
-#line 163 "main.y"
-                                        {
-		printf("\nPower : %d ^ %d \n", yyvsp[-2], yyvsp[0], yyvsp[-2] ^ yyvsp[0]);
-		yyval = pow(yyvsp[-2], yyvsp[0]);
-	}
-#line 1456 "main.tab.c"
+  case 35: /* expression: expression '%' expression  */
+#line 162 "main.y"
+                                   {
+        if (yyvsp[0]) {
+            yyval = yyvsp[-2] % yyvsp[0];
+        }
+        else {
+            yyval = 0;
+			yyerror("Error!, Mod by 0!!");
+        }
+    }
+#line 1461 "main.tab.c"
     break;
 
-  case 36: /* expression: expression '<' expression  */
-#line 168 "main.y"
-                                        {
-		printf("\nLess Than : %d < %d \n", yyvsp[-2], yyvsp[0], yyvsp[-2] < yyvsp[0]);
-		yyval = yyvsp[-2] < yyvsp[0];
-	}
-#line 1465 "main.tab.c"
+  case 36: /* expression: expression '^' expression  */
+#line 171 "main.y"
+                                   {
+        yyval = pow(yyvsp[-2], yyvsp[0]);
+    }
+#line 1469 "main.tab.c"
     break;
 
-  case 37: /* expression: expression '>' expression  */
-#line 173 "main.y"
-                                        {
-		printf("\nGreater than : %d > %d \n ", yyvsp[-2], yyvsp[0], yyvsp[-2] > yyvsp[0]);
-		yyval = yyvsp[-2] > yyvsp[0];
-	}
-#line 1474 "main.tab.c"
+  case 37: /* expression: expression '<' expression  */
+#line 174 "main.y"
+                                   {
+        yyval = yyvsp[-2] < yyvsp[0];
+    }
+#line 1477 "main.tab.c"
     break;
 
-  case 38: /* expression: '(' expression ')'  */
-#line 178 "main.y"
-                                        { yyval = yyvsp[-1]; }
-#line 1480 "main.tab.c"
+  case 38: /* expression: expression '>' expression  */
+#line 177 "main.y"
+                                   {
+        yyval = yyvsp[-2] > yyvsp[0];
+    }
+#line 1485 "main.tab.c"
+    break;
+
+  case 39: /* expression: '(' expression ')'  */
+#line 180 "main.y"
+                                { yyval = yyvsp[-1]; }
+#line 1491 "main.tab.c"
     break;
 
 
-#line 1484 "main.tab.c"
+#line 1495 "main.tab.c"
 
       default: break;
     }
@@ -1673,26 +1684,34 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 180 "main.y"
-
+#line 182 "main.y"
 
 
 void yyerror(char *s) {
-	printf( "%s\n", s);
+    printf("%s\n", s);
+}
+
+int yywrap() {
+    return 1;
 }
 
 int main(void) {
-	yyin = fopen( "input.txt", "r" );
-	yyout = fopen( "output.txt", "w" );
-	yyError = fopen( "outputError.txt", "w" );
+    yyin = fopen("input.txt", "r");
+    yyout = fopen("output.txt", "w");
+    yyError = fopen("outputError.txt", "w");
 
-	yyparse();
+    // Initialize switchCases array
+    switchCases = (SwitchCase *)malloc(1000 * sizeof(SwitchCase));
 
-	printf("All the input parsing complete \n");
-	printf("\n**********************************\n");
+	fprintf(yyout, "\nMain Function Start\n");
+    yyparse();
+	fprintf(yyout, "\nMain Function End\n");
 
-	fclose(yyin);
-	fclose(yyout);
+    // Free switchCases array
+    free(switchCases);
 
-	return 0;
+    fclose(yyin);
+    fclose(yyout);
+
+    return 0;
 }

@@ -20,7 +20,8 @@
     PRINT = 272,
     CASE = 273,
     DEFAULT = 274,
-    SWITCH = 275
+    SWITCH = 275,
+    COMMENT = 276,
   };
 #endif
 
