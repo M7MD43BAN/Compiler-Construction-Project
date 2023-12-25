@@ -20,6 +20,12 @@ Print 0
 Print 0
 Print 1
 
+Single line comment found -> # Print Line Function with number of lines
+
+
+
+
+
 Single line comment found -> # Logical OperationsPrint 1
 Print 1
 Print 0

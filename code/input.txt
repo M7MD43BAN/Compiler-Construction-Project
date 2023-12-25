@@ -19,6 +19,8 @@ Main() {
 	PRINT(23 != 23);
 	PRINT(5 >= 10);
 	PRINT(10 <= 20);
+	# Print Line Function with number of lines
+	PRINTL(5);
 
 	# Logical Operations
 	PRINT(5 > 2 && 10 < 20);

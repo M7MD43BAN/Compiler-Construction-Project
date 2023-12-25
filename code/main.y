@@ -24,7 +24,7 @@
 %token 	NUM VAR IF ELSE MAIN INT FLOAT DOUBLE CHAR BOOLEAN
 		BRACKETSTART BRACKETEND FOR WHILE PRINT CASE DEFAULT SWITCH
 		IS_EQUAL IS_NOT_EQUAL GREATER_THAN_OR_EQUAL LESS_THAN_OR_EQUAL
-		AND OR NOT
+		AND OR NOT PRINTL
 
 %right '='
 %left '<' '>'
@@ -97,6 +97,17 @@ statement: ';'
 	}
 	| PRINT '(' expression ')' ';'	{
 		fprintf(yyout, "Print %d\n", $3);
+	}
+	| PRINTL '(' NUM ')' ';'	{
+		if ($3 > 0) {
+			for (int i = 0; i < $3; i++) {
+				fprintf(yyout, "\n");
+			}
+		}
+		else {
+			yyerror("Error! Number of lines to print should be greater than zero\n");
+			YYABORT;
+		}
 	}
 	| SWITCH '(' NUM ')' BRACKETSTART SWITCHCASE BRACKETEND {
 		int switchValue = $3;

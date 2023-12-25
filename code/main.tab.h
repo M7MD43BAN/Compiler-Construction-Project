@@ -27,5 +27,6 @@
 #define AND 280
 #define OR 281
 #define NOT 282
+#define PRINTL 283
 
 extern YYSTYPE yylval;

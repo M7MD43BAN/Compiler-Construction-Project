@@ -79,6 +79,7 @@ NOT						[!]
 "DOUBLE"				{ return DOUBLE; }
 "BOOLEAN"           	{ return BOOLEAN; }
 "Main"	   				{ return MAIN; }
+"PRINTL"				{ return PRINTL; }
 
 {DIGIT}+   		    	{   /* integers */
 							yylval = atoi(yytext);
