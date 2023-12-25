@@ -20,5 +20,7 @@
 #define CASE 273
 #define DEFAULT 274
 #define SWITCH 275
+#define IS_EQUAL 276
+#define IS_NOT_EQUAL 277
 
 extern YYSTYPE yylval;

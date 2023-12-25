@@ -49,11 +49,13 @@
 	}
 %}
 
-VARIABLE    [a-zA-Z][a-zA-Z0-9]*
-DIGIT 		[0-9]
-COMMENT		[#].*
-WHITESPACE	[ \t\n\r]
-SYMBOLS		[-+/*<>=,():;%^]
+VARIABLE    	[a-zA-Z][a-zA-Z0-9]*
+DIGIT 			[0-9]
+COMMENT			[#].*
+WHITESPACE		[ \t\n\r]
+SYMBOLS			[-+/*<>=,():;%^]
+IS_EQUAL		[=][=]
+IS_NOT_EQUAL	[!][=]
 
 %%
 "CASE"				{ return CASE; }
@@ -93,5 +95,7 @@ SYMBOLS		[-+/*<>=,():;%^]
 					}
 
 {WHITESPACE}*	    { /* Ignore whitespace */ }
+{IS_EQUAL}			{ return IS_EQUAL; }
+{IS_NOT_EQUAL}		{ return IS_NOT_EQUAL; }
 .					{ yyerror("Invalid syntax"); }
 %%

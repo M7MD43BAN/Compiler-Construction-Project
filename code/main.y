@@ -21,7 +21,7 @@
 
 /* bison declarations */
 
-%token NUM VAR IF ELSE MAIN INT FLOAT DOUBLE CHAR BOOLEAN BRACKETSTART BRACKETEND FOR WHILE PRINT CASE DEFAULT SWITCH
+%token NUM VAR IF ELSE MAIN INT FLOAT DOUBLE CHAR BOOLEAN BRACKETSTART BRACKETEND FOR WHILE PRINT CASE DEFAULT SWITCH IS_EQUAL IS_NOT_EQUAL
 
 %right '='
 %left '<' '>'
@@ -51,6 +51,13 @@ statement: ';'
 	| WHILE '(' NUM '<' NUM ')' BRACKETSTART statement BRACKETEND  {
 		int i;
 		for (i = $3; i < $5; i++) {
+			fprintf(yyout, "While loop %d\n", i);
+		}
+		fprintf(yyout, "While loop:  %d\n", $8);
+	}
+	| WHILE '(' NUM '>' NUM ')' BRACKETSTART statement BRACKETEND  {
+		int i;
+		for (i = $3; i > $5; i--) {
 			fprintf(yyout, "While loop %d\n", i);
 		}
 		fprintf(yyout, "While loop:  %d\n", $8);
@@ -139,8 +146,24 @@ defaultgrammer: DEFAULT ':' expression ';' {
 }
     ;
 
-expression: NUM                    { $$ = $1; }
-    | VAR                        { $$ = sym[$1]; }
+expression: NUM						{ $$ = $1; }
+    | VAR                       	{ $$ = sym[$1]; }
+	| expression IS_EQUAL expression {
+		if ($1 == $3) {
+			$$ = 1;
+		}
+		else {
+			$$ = 0;
+		}
+	}
+	| expression IS_NOT_EQUAL expression {
+		if ($1 != $3) {
+			$$ = 1;
+		}
+		else {
+			$$ = 0;
+		}
+	}
     | expression '+' expression    {
         $$ = $1 + $3;
     }
@@ -172,10 +195,20 @@ expression: NUM                    { $$ = $1; }
         $$ = pow($1, $3);
     }
     | expression '<' expression    {
-        $$ = $1 < $3;
+        if ($1 < $3) {
+			$$ = 1;
+		}
+		else {
+			$$ = 0;
+		}
     }
     | expression '>' expression    {
-        $$ = $1 > $3;
+        if ($1 > $3) {
+			$$ = 1;
+		}
+		else {
+			$$ = 0;
+		}
     }
     | '(' expression ')'        { $$ = $2; }
     ;
