@@ -622,10 +622,10 @@ static const yytype_int8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    38,    38,    41,    42,    44,    45,    46,    49,    54,
-      61,    68,    75,    82,    90,    98,   101,   106,   127,   136,
-     139,   140,   141,   142,   143,   146,   149,   150,   153,   154,
-     157,   166,   171,   172,   173,   174,   175,   176,   184,   192,
-     193,   194,   195,   196,   197,   198,   199,   200,   201,   202
+      66,    78,    90,   102,   110,   118,   121,   126,   147,   156,
+     159,   160,   161,   162,   163,   166,   169,   170,   173,   174,
+     177,   186,   191,   192,   193,   194,   195,   196,   204,   212,
+     213,   214,   215,   216,   217,   218,   219,   220,   221,   222
 };
 #endif
 
@@ -1325,52 +1325,72 @@ yyreduce:
 #line 54 "main.y"
                                                                        {
 		int i = 0;
+		int loopExecuted = 0;
 		fprintf(yyout, "\n");
 		for (i = yyvsp[-6]; i > yyvsp[-4]; i--) {
 			fprintf(yyout, "While loop %d\n", i);
+			loopExecuted = 1;
 		}
+		if (loopExecuted) {
+        	fprintf(yyout, "While loop result:  %d\n", yyvsp[-1]);
+    	}
 	}
-#line 1334 "main.tab.c"
+#line 1339 "main.tab.c"
     break;
 
   case 10: /* statement: WHILE '(' NUM '<' NUM ')' BRACKETSTART statement BRACKETEND  */
-#line 61 "main.y"
+#line 66 "main.y"
                                                                        {
 		int i = 0;
+		int loopExecuted = 0;
 		fprintf(yyout, "\n");
 		for (i = yyvsp[-6]; i < yyvsp[-4]; i++) {
 			fprintf(yyout, "While loop %d\n", i);
+			loopExecuted = 1;
+		}
+		if (loopExecuted) {
+			fprintf(yyout, "While loop result:  %d\n", yyvsp[-1]);
 		}
 	}
-#line 1346 "main.tab.c"
+#line 1356 "main.tab.c"
     break;
 
   case 11: /* statement: WHILE '(' NUM GREATER_THAN_OR_EQUAL NUM ')' BRACKETSTART statement BRACKETEND  */
-#line 68 "main.y"
+#line 78 "main.y"
                                                                                          {
 		int i = 0;
+		int loopExecuted = 0;
 		fprintf(yyout, "\n");
 		for (i = yyvsp[-6]; i >= yyvsp[-4]; i--) {
 			fprintf(yyout, "While loop %d\n", i);
+			loopExecuted = 1;
+		}
+		if (loopExecuted) {
+			fprintf(yyout, "While loop result:  %d\n", yyvsp[-1]);
 		}
 	}
-#line 1358 "main.tab.c"
+#line 1373 "main.tab.c"
     break;
 
   case 12: /* statement: WHILE '(' NUM LESS_THAN_OR_EQUAL NUM ')' BRACKETSTART statement BRACKETEND  */
-#line 75 "main.y"
+#line 90 "main.y"
                                                                                       {
 		int i = 0;
+		int loopExecuted = 0;
 		fprintf(yyout, "\n");
 		for (i = yyvsp[-6]; i <= yyvsp[-4]; i++) {
 			fprintf(yyout, "While loop %d\n", i);
+			loopExecuted = 1;
+		}
+		if (loopExecuted) {
+			fprintf(yyout, "While loop result:  %d\n", yyvsp[-1]);
 		}
 	}
-#line 1370 "main.tab.c"
+#line 1390 "main.tab.c"
     break;
 
   case 13: /* statement: IF '(' expression ')' BRACKETSTART statement BRACKETEND  */
-#line 82 "main.y"
+#line 102 "main.y"
                                                                         {
 		if (yyvsp[-4]) {
 			fprintf(yyout, "value of expression in IF: %d\n", yyvsp[-1]);
@@ -1379,11 +1399,11 @@ yyreduce:
 			fprintf(yyout, "condition value zero in IF block\n");
 		}
 	}
-#line 1383 "main.tab.c"
+#line 1403 "main.tab.c"
     break;
 
   case 14: /* statement: IF '(' expression ')' BRACKETSTART statement BRACKETEND ELSE BRACKETSTART statement BRACKETEND  */
-#line 90 "main.y"
+#line 110 "main.y"
                                                                                                                 {
 		if (yyvsp[-8]) {
 			fprintf(yyout, "value of expression in IF: %d\n", yyvsp[-5]);
@@ -1392,29 +1412,29 @@ yyreduce:
 			fprintf(yyout, "value of expression in ELSE: %d\n", yyvsp[-1]);
 		}
 	}
-#line 1396 "main.tab.c"
+#line 1416 "main.tab.c"
     break;
 
   case 15: /* statement: PRINT '(' expression ')' ';'  */
-#line 98 "main.y"
+#line 118 "main.y"
                                         {
 		fprintf(yyout, "Print %d\n", yyvsp[-2]);
 	}
-#line 1404 "main.tab.c"
+#line 1424 "main.tab.c"
     break;
 
   case 16: /* statement: PRINTL '(' NUM ')' ';'  */
-#line 101 "main.y"
+#line 121 "main.y"
                                         {
 		for (int i = 0; i < yyvsp[-2]; i++) {
 			fprintf(yyout, "\n");
 		}
 	}
-#line 1414 "main.tab.c"
+#line 1434 "main.tab.c"
     break;
 
   case 17: /* statement: SWITCH '(' NUM ')' BRACKETSTART SWITCHCASE BRACKETEND  */
-#line 106 "main.y"
+#line 126 "main.y"
                                                                 {
 		int switchValue = yyvsp[-4];
 		int matched = 0;
@@ -1436,53 +1456,53 @@ yyreduce:
 			fprintf(yyout, "Value of the default case: %d\n", sym[0]); // Adjust if needed
 		}
 	}
-#line 1440 "main.tab.c"
+#line 1460 "main.tab.c"
     break;
 
   case 18: /* statement: FOR '(' NUM ',' NUM ',' NUM ')' BRACKETSTART statement BRACKETEND  */
-#line 127 "main.y"
+#line 147 "main.y"
                                                                                 {
 		int i;
 		for (i = yyvsp[-8]; i < yyvsp[-6]; i = i + yyvsp[-4]) {
 			fprintf(yyout, "For loop %d\n", i);
 		}
-		fprintf(yyout, "For loop:  %d\n", yyvsp[-1]);
+		fprintf(yyout, "For loop result:  %d\n", yyvsp[-1]);
 	}
-#line 1452 "main.tab.c"
+#line 1472 "main.tab.c"
     break;
 
   case 20: /* TYPE: INT  */
-#line 139 "main.y"
+#line 159 "main.y"
                 { fprintf(yyout, "\ninterger declaration: "); }
-#line 1458 "main.tab.c"
+#line 1478 "main.tab.c"
     break;
 
   case 21: /* TYPE: FLOAT  */
-#line 140 "main.y"
+#line 160 "main.y"
                         { fprintf(yyout, "\nfloat declaration: "); }
-#line 1464 "main.tab.c"
+#line 1484 "main.tab.c"
     break;
 
   case 22: /* TYPE: CHAR  */
-#line 141 "main.y"
+#line 161 "main.y"
                         { fprintf(yyout, "\nchar declaration: "); }
-#line 1470 "main.tab.c"
+#line 1490 "main.tab.c"
     break;
 
   case 23: /* TYPE: DOUBLE  */
-#line 142 "main.y"
+#line 162 "main.y"
                         { fprintf(yyout, "\ndouble declaration: "); }
-#line 1476 "main.tab.c"
+#line 1496 "main.tab.c"
     break;
 
   case 24: /* TYPE: BOOLEAN  */
-#line 143 "main.y"
+#line 163 "main.y"
                     { fprintf(yyout, "\nbool declaration: "); }
-#line 1482 "main.tab.c"
+#line 1502 "main.tab.c"
     break;
 
   case 30: /* casenumber: CASE NUM ':' expression ';'  */
-#line 157 "main.y"
+#line 177 "main.y"
                                         {
     if (switchCasesCount < 1000) {
         switchCases[switchCasesCount].caseValue = yyvsp[-3];
@@ -1490,49 +1510,49 @@ yyreduce:
         switchCasesCount++;
     }
 }
-#line 1494 "main.tab.c"
-    break;
-
-  case 31: /* defaultgrammer: DEFAULT ':' expression ';'  */
-#line 166 "main.y"
-                                           {
-    sym[0] = yyvsp[-1]; // Store the value in sym for the default case
-}
-#line 1502 "main.tab.c"
-    break;
-
-  case 32: /* expression: NUM  */
-#line 171 "main.y"
-                                                        { yyval = yyvsp[0]; }
-#line 1508 "main.tab.c"
-    break;
-
-  case 33: /* expression: VAR  */
-#line 172 "main.y"
-                                        { yyval = sym[yyvsp[0]]; }
 #line 1514 "main.tab.c"
     break;
 
+  case 31: /* defaultgrammer: DEFAULT ':' expression ';'  */
+#line 186 "main.y"
+                                           {
+    sym[0] = yyvsp[-1]; // Store the value in sym for the default case
+}
+#line 1522 "main.tab.c"
+    break;
+
+  case 32: /* expression: NUM  */
+#line 191 "main.y"
+                                                        { yyval = yyvsp[0]; }
+#line 1528 "main.tab.c"
+    break;
+
+  case 33: /* expression: VAR  */
+#line 192 "main.y"
+                                        { yyval = sym[yyvsp[0]]; }
+#line 1534 "main.tab.c"
+    break;
+
   case 34: /* expression: expression '+' expression  */
-#line 173 "main.y"
+#line 193 "main.y"
                                         { yyval = yyvsp[-2] + yyvsp[0]; }
-#line 1520 "main.tab.c"
+#line 1540 "main.tab.c"
     break;
 
   case 35: /* expression: expression '-' expression  */
-#line 174 "main.y"
+#line 194 "main.y"
                                         { yyval = yyvsp[-2] - yyvsp[0]; }
-#line 1526 "main.tab.c"
+#line 1546 "main.tab.c"
     break;
 
   case 36: /* expression: expression '*' expression  */
-#line 175 "main.y"
+#line 195 "main.y"
                                         { yyval = yyvsp[-2] * yyvsp[0]; }
-#line 1532 "main.tab.c"
+#line 1552 "main.tab.c"
     break;
 
   case 37: /* expression: expression '/' expression  */
-#line 176 "main.y"
+#line 196 "main.y"
                                 {
         if (yyvsp[0] != 0) {
             yyval = yyvsp[-2] / yyvsp[0];
@@ -1541,11 +1561,11 @@ yyreduce:
             YYABORT;
         }
     }
-#line 1545 "main.tab.c"
+#line 1565 "main.tab.c"
     break;
 
   case 38: /* expression: expression '%' expression  */
-#line 184 "main.y"
+#line 204 "main.y"
                                 {
         if (yyvsp[0] != 0) {
             yyval = yyvsp[-2] % yyvsp[0];
@@ -1554,77 +1574,77 @@ yyreduce:
             YYABORT;
         }
     }
-#line 1558 "main.tab.c"
+#line 1578 "main.tab.c"
     break;
 
   case 39: /* expression: expression '^' expression  */
-#line 192 "main.y"
+#line 212 "main.y"
                                                                                 { yyval = pow(yyvsp[-2], yyvsp[0]); }
-#line 1564 "main.tab.c"
+#line 1584 "main.tab.c"
     break;
 
   case 40: /* expression: expression '<' expression  */
-#line 193 "main.y"
+#line 213 "main.y"
                                                                                 { yyval = (yyvsp[-2] < yyvsp[0]) ? 1 : 0; }
-#line 1570 "main.tab.c"
+#line 1590 "main.tab.c"
     break;
 
   case 41: /* expression: expression '>' expression  */
-#line 194 "main.y"
+#line 214 "main.y"
                                                                                 { yyval = (yyvsp[-2] > yyvsp[0]) ? 1 : 0; }
-#line 1576 "main.tab.c"
+#line 1596 "main.tab.c"
     break;
 
   case 42: /* expression: expression IS_EQUAL expression  */
-#line 195 "main.y"
+#line 215 "main.y"
                                                                         { yyval = (yyvsp[-2] == yyvsp[0]) ? 1 : 0; }
-#line 1582 "main.tab.c"
+#line 1602 "main.tab.c"
     break;
 
   case 43: /* expression: expression IS_NOT_EQUAL expression  */
-#line 196 "main.y"
+#line 216 "main.y"
                                                                         { yyval = (yyvsp[-2] != yyvsp[0]) ? 1 : 0; }
-#line 1588 "main.tab.c"
+#line 1608 "main.tab.c"
     break;
 
   case 44: /* expression: expression GREATER_THAN_OR_EQUAL expression  */
-#line 197 "main.y"
+#line 217 "main.y"
                                                                 { yyval = (yyvsp[-2] >= yyvsp[0]) ? 1 : 0; }
-#line 1594 "main.tab.c"
+#line 1614 "main.tab.c"
     break;
 
   case 45: /* expression: expression LESS_THAN_OR_EQUAL expression  */
-#line 198 "main.y"
+#line 218 "main.y"
                                                                 { yyval = (yyvsp[-2] <= yyvsp[0]) ? 1 : 0; }
-#line 1600 "main.tab.c"
+#line 1620 "main.tab.c"
     break;
 
   case 46: /* expression: expression AND expression  */
-#line 199 "main.y"
+#line 219 "main.y"
                                                                                 { yyval = (yyvsp[-2] && yyvsp[0]) ? 1 : 0; }
-#line 1606 "main.tab.c"
+#line 1626 "main.tab.c"
     break;
 
   case 47: /* expression: expression OR expression  */
-#line 200 "main.y"
+#line 220 "main.y"
                                                                                 { yyval = (yyvsp[-2] || yyvsp[0]) ? 1 : 0; }
-#line 1612 "main.tab.c"
+#line 1632 "main.tab.c"
     break;
 
   case 48: /* expression: NOT expression  */
-#line 201 "main.y"
+#line 221 "main.y"
                                                                                         { yyval = !yyvsp[0]; }
-#line 1618 "main.tab.c"
+#line 1638 "main.tab.c"
     break;
 
   case 49: /* expression: '(' expression ')'  */
-#line 202 "main.y"
+#line 222 "main.y"
                                                                                 { yyval = yyvsp[-1]; }
-#line 1624 "main.tab.c"
+#line 1644 "main.tab.c"
     break;
 
 
-#line 1628 "main.tab.c"
+#line 1648 "main.tab.c"
 
       default: break;
     }
@@ -1817,7 +1837,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 204 "main.y"
+#line 224 "main.y"
 
 
 void yyerror(char *s) {

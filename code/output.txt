@@ -52,6 +52,7 @@ While loop 1
 While loop 2
 While loop 3
 While loop 4
+While loop result:  200
 
 While loop 0
 While loop 1
@@ -59,12 +60,14 @@ While loop 2
 While loop 3
 While loop 4
 While loop 5
+While loop result:  300
 
 While loop 15
 While loop 14
 While loop 13
 While loop 12
 While loop 11
+While loop result:  400
 
 While loop 15
 While loop 14
@@ -72,6 +75,7 @@ While loop 13
 While loop 12
 While loop 11
 While loop 10
+While loop result:  500
 
 
 Single line comment found -> # For Loop with Step 2For loop 2
@@ -83,7 +87,7 @@ For loop 12
 For loop 14
 For loop 16
 For loop 18
-For loop:  29
+For loop result:  29
 
 Single line comment found -> # Switch Statement with Default CaseNo matching case found for value: 100
 Value of the default case: 7

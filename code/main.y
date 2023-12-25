@@ -53,30 +53,50 @@ statement: ';'
 	}
 	| WHILE '(' NUM '>' NUM ')' BRACKETSTART statement BRACKETEND  {
 		int i = 0;
+		int loopExecuted = 0;
 		fprintf(yyout, "\n");
 		for (i = $3; i > $5; i--) {
 			fprintf(yyout, "While loop %d\n", i);
+			loopExecuted = 1;
 		}
+		if (loopExecuted) {
+        	fprintf(yyout, "While loop result:  %d\n", $8);
+    	}
 	}
 	| WHILE '(' NUM '<' NUM ')' BRACKETSTART statement BRACKETEND  {
 		int i = 0;
+		int loopExecuted = 0;
 		fprintf(yyout, "\n");
 		for (i = $3; i < $5; i++) {
 			fprintf(yyout, "While loop %d\n", i);
+			loopExecuted = 1;
+		}
+		if (loopExecuted) {
+			fprintf(yyout, "While loop result:  %d\n", $8);
 		}
 	}
 	| WHILE '(' NUM GREATER_THAN_OR_EQUAL NUM ')' BRACKETSTART statement BRACKETEND  {
 		int i = 0;
+		int loopExecuted = 0;
 		fprintf(yyout, "\n");
 		for (i = $3; i >= $5; i--) {
 			fprintf(yyout, "While loop %d\n", i);
+			loopExecuted = 1;
+		}
+		if (loopExecuted) {
+			fprintf(yyout, "While loop result:  %d\n", $8);
 		}
 	}
 	| WHILE '(' NUM LESS_THAN_OR_EQUAL NUM ')' BRACKETSTART statement BRACKETEND  {
 		int i = 0;
+		int loopExecuted = 0;
 		fprintf(yyout, "\n");
 		for (i = $3; i <= $5; i++) {
 			fprintf(yyout, "While loop %d\n", i);
+			loopExecuted = 1;
+		}
+		if (loopExecuted) {
+			fprintf(yyout, "While loop result:  %d\n", $8);
 		}
 	}
 	| IF '(' expression ')' BRACKETSTART statement BRACKETEND	{
@@ -129,7 +149,7 @@ statement: ';'
 		for (i = $3; i < $5; i = i + $7) {
 			fprintf(yyout, "For loop %d\n", i);
 		}
-		fprintf(yyout, "For loop:  %d\n", $10);
+		fprintf(yyout, "For loop result:  %d\n", $10);
 	}
 	;
 
