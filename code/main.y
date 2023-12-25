@@ -21,7 +21,10 @@
 
 /* bison declarations */
 
-%token NUM VAR IF ELSE MAIN INT FLOAT DOUBLE CHAR BOOLEAN BRACKETSTART BRACKETEND FOR WHILE PRINT CASE DEFAULT SWITCH IS_EQUAL IS_NOT_EQUAL
+%token 	NUM VAR IF ELSE MAIN INT FLOAT DOUBLE CHAR BOOLEAN
+		BRACKETSTART BRACKETEND FOR WHILE PRINT CASE DEFAULT SWITCH
+		IS_EQUAL IS_NOT_EQUAL GREATER_THAN_OR_EQUAL LESS_THAN_OR_EQUAL
+		AND OR NOT
 
 %right '='
 %left '<' '>'
@@ -148,22 +151,6 @@ defaultgrammer: DEFAULT ':' expression ';' {
 
 expression: NUM						{ $$ = $1; }
     | VAR                       	{ $$ = sym[$1]; }
-	| expression IS_EQUAL expression {
-		if ($1 == $3) {
-			$$ = 1;
-		}
-		else {
-			$$ = 0;
-		}
-	}
-	| expression IS_NOT_EQUAL expression {
-		if ($1 != $3) {
-			$$ = 1;
-		}
-		else {
-			$$ = 0;
-		}
-	}
     | expression '+' expression    {
         $$ = $1 + $3;
     }
@@ -210,6 +197,62 @@ expression: NUM						{ $$ = $1; }
 			$$ = 0;
 		}
     }
+	| expression IS_EQUAL expression {
+		if ($1 == $3) {
+			$$ = 1;
+		}
+		else {
+			$$ = 0;
+		}
+	}
+	| expression IS_NOT_EQUAL expression {
+		if ($1 != $3) {
+			$$ = 1;
+		}
+		else {
+			$$ = 0;
+		}
+	}
+	| expression GREATER_THAN_OR_EQUAL expression {
+		if ($1 >= $3) {
+			$$ = 1;
+		}
+		else {
+			$$ = 0;
+		}
+	}
+	| expression LESS_THAN_OR_EQUAL expression {
+		if ($1 <= $3) {
+			$$ = 1;
+		}
+		else {
+			$$ = 0;
+		}
+	}
+	| expression AND expression {
+		if ($1 && $3) {
+			$$ = 1;
+		}
+		else {
+			$$ = 0;
+		}
+	}
+	| expression OR expression {
+		if ($1 || $3) {
+			$$ = 1;
+		}
+		else {
+			$$ = 0;
+		}
+	}
+	| NOT expression {
+		if (!$2) {
+			$$ = 1;
+		}
+		else {
+			$$ = 0;
+		}
+	}
     | '(' expression ')'        { $$ = $2; }
     ;
 %%

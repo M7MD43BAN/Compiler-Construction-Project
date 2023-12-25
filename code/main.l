@@ -49,53 +49,63 @@
 	}
 %}
 
-VARIABLE    	[a-zA-Z][a-zA-Z0-9]*
-DIGIT 			[0-9]
-COMMENT			[#].*
-WHITESPACE		[ \t\n\r]
-SYMBOLS			[-+/*<>=,():;%^]
-IS_EQUAL		[=][=]
-IS_NOT_EQUAL	[!][=]
+VARIABLE    			[a-zA-Z][a-zA-Z0-9]*
+DIGIT 					[0-9]
+COMMENT					[#].*
+WHITESPACE				[ \t\n\r]
+SYMBOLS					[-+/*<>=,():;%^]
+IS_EQUAL				[=][=]
+IS_NOT_EQUAL			[!][=]
+GREATER_THAN_OR_EQUAL	[>][=]
+LESS_THAN_OR_EQUAL		[<][=]
+AND						[&][&]
+OR						[|][|]
+NOT						[!]
 
 %%
-"CASE"				{ return CASE; }
-"SWITCH" 			{ return SWITCH; }
-"DEFAULT" 			{ return DEFAULT; }
-"PRINT" 			{ return PRINT; }
-"IF"				{ return IF; }
-"ELSE" 		   		{ return ELSE; }
-"{" 		   		{ return BRACKETSTART; }
-"}"  		   		{ return BRACKETEND; }
-"FOR" 		   		{ return FOR; }
-"WHILE"		   		{ return WHILE; }
-"INT"  				{ return INT; }
-"CHAR" 		     	{ return CHAR; }
-"FLOAT"			 	{ return FLOAT; }
-"DOUBLE"			{ return DOUBLE; }
-"BOOLEAN"           { return BOOLEAN; }
-"Main"	   			{ return MAIN; }
+"CASE"					{ return CASE; }
+"SWITCH" 				{ return SWITCH; }
+"DEFAULT" 				{ return DEFAULT; }
+"PRINT" 				{ return PRINT; }
+"IF"					{ return IF; }
+"ELSE" 		   			{ return ELSE; }
+"{" 		   			{ return BRACKETSTART; }
+"}"  		   			{ return BRACKETEND; }
+"FOR" 		   			{ return FOR; }
+"WHILE"		   			{ return WHILE; }
+"INT"  					{ return INT; }
+"CHAR" 		     		{ return CHAR; }
+"FLOAT"			 		{ return FLOAT; }
+"DOUBLE"				{ return DOUBLE; }
+"BOOLEAN"           	{ return BOOLEAN; }
+"Main"	   				{ return MAIN; }
 
-{DIGIT}+   		    {   /* integers */
-						yylval = atoi(yytext);
-						return NUM;
-					}
-{COMMENT}           { fprintf(yyout, "\nSingle line comment found -> "); ECHO; }
-
-{SYMBOLS}    		{ yylval = yytext[0]; return *yytext; }
-
-{VARIABLE}			{ 	ECHO;/* variables */
-						if(getValueFromMap(yytext) == -1) {
-								addToMap(yytext, num_of_v);
-								yylval = num_of_v;
-								num_of_v++;
+{DIGIT}+   		    	{   /* integers */
+							yylval = atoi(yytext);
+							return NUM;
 						}
-						else
-							yylval = getValueFromMap(yytext);
-						return VAR;
-					}
+{COMMENT}           	{ fprintf(yyout, "\nSingle line comment found -> "); ECHO; }
 
-{WHITESPACE}*	    { /* Ignore whitespace */ }
-{IS_EQUAL}			{ return IS_EQUAL; }
-{IS_NOT_EQUAL}		{ return IS_NOT_EQUAL; }
-.					{ yyerror("Invalid syntax"); }
+{SYMBOLS}    			{ yylval = yytext[0]; return *yytext; }
+
+{VARIABLE}				{ 	ECHO;/* variables */
+							if(getValueFromMap(yytext) == -1) {
+									addToMap(yytext, num_of_v);
+									yylval = num_of_v;
+									num_of_v++;
+							}
+							else
+								yylval = getValueFromMap(yytext);
+							return VAR;
+						}
+
+{WHITESPACE}*	    	{ /* Ignore whitespace */ }
+{IS_EQUAL}				{ return IS_EQUAL; }
+{IS_NOT_EQUAL}			{ return IS_NOT_EQUAL; }
+{GREATER_THAN_OR_EQUAL}	{ return GREATER_THAN_OR_EQUAL; }
+{LESS_THAN_OR_EQUAL}	{ return LESS_THAN_OR_EQUAL; }
+{AND}					{ return AND; }
+{OR}					{ return OR; }
+{NOT}					{ return NOT; }
+.						{ yyerror("Invalid syntax"); }
 %%

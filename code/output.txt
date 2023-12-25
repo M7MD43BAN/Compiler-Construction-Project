@@ -11,10 +11,16 @@ Print 11
 Single line comment found -> # PRINT(5 / 0);
 Single line comment found -> # PRINT(5 % 0);Print 25
 
-Single line comment found -> # Logical OperationsPrint 1
+Single line comment found -> # Rational OperationsPrint 1
 Print 0
 Print 0
 Print 1
+Print 1
+Print 0
+Print 0
+Print 1
+
+Single line comment found -> # Logical OperationsPrint 1
 Print 1
 Print 0
 
@@ -26,7 +32,7 @@ double declaration: number4
 float declaration: number5
 bool declaration: flag
 char declaration: abc
-Single line comment found -> # If Else Statementvalue of expression in ELSE: 29
+Single line comment found -> # If Else Statement it works with ==, !=, >, <, >=, <=value of expression in ELSE: 29
 
 Single line comment found -> # If Statementvalue of expression in IF: 99
 While loop 0

@@ -10,13 +10,20 @@ Main() {
 	# PRINT(5 / 0);
 	# PRINT(5 % 0);
 	PRINT(5 ^ 2);
-	# Logical Operations
+	# Rational Operations
 	PRINT(5 > 2);
 	PRINT(5 < 2);
 	PRINT(5 == 10);
 	PRINT(10 == 10);
 	PRINT(19 != 10);
 	PRINT(23 != 23);
+	PRINT(5 >= 10);
+	PRINT(10 <= 20);
+
+	# Logical Operations
+	PRINT(5 > 2 && 10 < 20);
+	PRINT(5 > 2 || 10 > 20);
+	PRINT(!(5 > 2));
 
 	# Variable Declaration and Assignment
 	number1 = 5;
@@ -27,7 +34,7 @@ Main() {
 	BOOLEAN flag;
 	CHAR abc;
 
-	# If Else Statement
+	# If Else Statement it works with ==, !=, >, <, >=, <=
 	IF(5 < 2)
 	{
 		15 - 30;

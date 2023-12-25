@@ -22,5 +22,10 @@
 #define SWITCH 275
 #define IS_EQUAL 276
 #define IS_NOT_EQUAL 277
+#define GREATER_THAN_OR_EQUAL 278
+#define LESS_THAN_OR_EQUAL 279
+#define AND 280
+#define OR 281
+#define NOT 282
 
 extern YYSTYPE yylval;
