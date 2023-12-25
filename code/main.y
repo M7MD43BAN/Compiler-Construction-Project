@@ -51,19 +51,33 @@ statement: ';'
 		sym[$1] = $3;
 		$$ = $3;
 	}
-	| WHILE '(' NUM '<' NUM ')' BRACKETSTART statement BRACKETEND  {
-		int i;
-		for (i = $3; i < $5; i++) {
-			fprintf(yyout, "While loop %d\n", i);
-		}
-		fprintf(yyout, "While loop:  %d\n", $8);
-	}
 	| WHILE '(' NUM '>' NUM ')' BRACKETSTART statement BRACKETEND  {
-		int i;
+		int i = 0;
+		fprintf(yyout, "\n");
 		for (i = $3; i > $5; i--) {
 			fprintf(yyout, "While loop %d\n", i);
 		}
-		fprintf(yyout, "While loop:  %d\n", $8);
+	}
+	| WHILE '(' NUM '<' NUM ')' BRACKETSTART statement BRACKETEND  {
+		int i = 0;
+		fprintf(yyout, "\n");
+		for (i = $3; i < $5; i++) {
+			fprintf(yyout, "While loop %d\n", i);
+		}
+	}
+	| WHILE '(' NUM GREATER_THAN_OR_EQUAL NUM ')' BRACKETSTART statement BRACKETEND  {
+		int i = 0;
+		fprintf(yyout, "\n");
+		for (i = $3; i >= $5; i--) {
+			fprintf(yyout, "While loop %d\n", i);
+		}
+	}
+	| WHILE '(' NUM LESS_THAN_OR_EQUAL NUM ')' BRACKETSTART statement BRACKETEND  {
+		int i = 0;
+		fprintf(yyout, "\n");
+		for (i = $3; i <= $5; i++) {
+			fprintf(yyout, "While loop %d\n", i);
+		}
 	}
 	| IF '(' expression ')' BRACKETSTART statement BRACKETEND	{
 		if ($3) {
@@ -151,109 +165,36 @@ defaultgrammer: DEFAULT ':' expression ';' {
 
 expression: NUM						{ $$ = $1; }
     | VAR                       	{ $$ = sym[$1]; }
-    | expression '+' expression    {
-        $$ = $1 + $3;
-    }
-    | expression '-' expression    {
-        $$ = $1 - $3;
-    }
-    | expression '*' expression    {
-        $$ = $1 * $3;
-    }
-    | expression '/' expression    {
-        if ($3) {
+    | expression '+' expression    	{ $$ = $1 + $3; }
+    | expression '-' expression    	{ $$ = $1 - $3; }
+    | expression '*' expression    	{ $$ = $1 * $3; }
+    | expression '/' expression	{
+        if ($3 != 0) {
             $$ = $1 / $3;
-        }
-        else {
-			yyerror("Error!, Division by 0!!");
-			YYABORT;
+        } else {
+            yyerror("Error! Division by zero");
+            YYABORT;
         }
     }
-    | expression '%' expression    {
-        if ($3) {
+    | expression '%' expression	{
+        if ($3 != 0) {
             $$ = $1 % $3;
+        } else {
+            yyerror("Error! Modulo by zero");
+            YYABORT;
         }
-        else {
-			yyerror("Error!, Mod by 0!!");
-			YYABORT;
-        }
     }
-    | expression '^' expression    {
-        $$ = pow($1, $3);
-    }
-    | expression '<' expression    {
-        if ($1 < $3) {
-			$$ = 1;
-		}
-		else {
-			$$ = 0;
-		}
-    }
-    | expression '>' expression    {
-        if ($1 > $3) {
-			$$ = 1;
-		}
-		else {
-			$$ = 0;
-		}
-    }
-	| expression IS_EQUAL expression {
-		if ($1 == $3) {
-			$$ = 1;
-		}
-		else {
-			$$ = 0;
-		}
-	}
-	| expression IS_NOT_EQUAL expression {
-		if ($1 != $3) {
-			$$ = 1;
-		}
-		else {
-			$$ = 0;
-		}
-	}
-	| expression GREATER_THAN_OR_EQUAL expression {
-		if ($1 >= $3) {
-			$$ = 1;
-		}
-		else {
-			$$ = 0;
-		}
-	}
-	| expression LESS_THAN_OR_EQUAL expression {
-		if ($1 <= $3) {
-			$$ = 1;
-		}
-		else {
-			$$ = 0;
-		}
-	}
-	| expression AND expression {
-		if ($1 && $3) {
-			$$ = 1;
-		}
-		else {
-			$$ = 0;
-		}
-	}
-	| expression OR expression {
-		if ($1 || $3) {
-			$$ = 1;
-		}
-		else {
-			$$ = 0;
-		}
-	}
-	| NOT expression {
-		if (!$2) {
-			$$ = 1;
-		}
-		else {
-			$$ = 0;
-		}
-	}
-    | '(' expression ')'        { $$ = $2; }
+    | expression '^' expression							{ $$ = pow($1, $3); }
+    | expression '<' expression    						{ $$ = ($1 < $3) ? 1 : 0; }
+    | expression '>' expression    						{ $$ = ($1 > $3) ? 1 : 0; }
+    | expression IS_EQUAL expression   					{ $$ = ($1 == $3) ? 1 : 0; }
+    | expression IS_NOT_EQUAL expression   				{ $$ = ($1 != $3) ? 1 : 0; }
+    | expression GREATER_THAN_OR_EQUAL expression		{ $$ = ($1 >= $3) ? 1 : 0; }
+    | expression LESS_THAN_OR_EQUAL expression   		{ $$ = ($1 <= $3) ? 1 : 0; }
+    | expression AND expression    						{ $$ = ($1 && $3) ? 1 : 0; }
+    | expression OR expression    						{ $$ = ($1 || $3) ? 1 : 0; }
+    | NOT expression    								{ $$ = !$2; }
+    | '(' expression ')'    							{ $$ = $2; }
     ;
 %%
 

@@ -33,20 +33,40 @@ float declaration: number5
 bool declaration: flag
 char declaration: abc
 Single line comment found -> # If Else Statement it works with ==, !=, >, <, >=, <=value of expression in ELSE: 29
+value of expression in ELSE: 99
+value of expression in IF: 15
+value of expression in IF: 3
+value of expression in IF: -150
+value of expression in ELSE: 111
 
 Single line comment found -> # If Statementvalue of expression in IF: 99
+
 While loop 0
 While loop 1
 While loop 2
 While loop 3
 While loop 4
-While loop:  200
+
+While loop 0
+While loop 1
+While loop 2
+While loop 3
+While loop 4
+While loop 5
+
+While loop 15
+While loop 14
+While loop 13
+While loop 12
+While loop 11
+
+While loop 15
+While loop 14
+While loop 13
+While loop 12
+While loop 11
 While loop 10
-While loop 9
-While loop 8
-While loop 7
-While loop 6
-While loop:  100
+
 
 Single line comment found -> # For Loop with Step 2For loop 2
 For loop 4
