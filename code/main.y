@@ -99,14 +99,8 @@ statement: ';'
 		fprintf(yyout, "Print %d\n", $3);
 	}
 	| PRINTL '(' NUM ')' ';'	{
-		if ($3 > 0) {
-			for (int i = 0; i < $3; i++) {
-				fprintf(yyout, "\n");
-			}
-		}
-		else {
-			yyerror("Error! Number of lines to print should be greater than zero\n");
-			YYABORT;
+		for (int i = 0; i < $3; i++) {
+			fprintf(yyout, "\n");
 		}
 	}
 	| SWITCH '(' NUM ')' BRACKETSTART SWITCHCASE BRACKETEND {
