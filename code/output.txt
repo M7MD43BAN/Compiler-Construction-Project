@@ -1,35 +1,56 @@
 
 Main Function Start
 
-Single line comment found :: # Hello World
-Single line comment found :: # This program is written by Mohamed Shaban
-Print 25
-number1 >>  Value of the variable : 5
-number2 >>  Value of the variable : 10
+Single line comment found -> # Hello World
+Single line comment found -> # This program is written by Mohamed Shaban
+Single line comment found -> # Print Function
+Print 5
 
-bool declaration: character
+Single line comment found -> # Arthimetic Operations
+Print 21
+Print 11
+
+Single line comment found -> # PRINT(5 / 0);
+Single line comment found -> # PRINT(5 % 0);
+Print 25
+Print 1
+Print 0
+
+Single line comment found -> # Variable Declaration and Assignment
+number1 >>  Value of the variable : 5
+Number2 >>  Value of the variable : 10
+
 interger declaration: number3
 double declaration: number4
 float declaration: number5
-char declaration: boolean1value of expression in ELSE: 29
+bool declaration: flag
+char declaration: abc
+Single line comment found -> # If Else Statement
+value of expression in ELSE: 29
+
+Single line comment found -> # If Statement
 value of expression in IF: 99
-While loop 0: 100
-While loop 1: 100
-While loop 2: 100
-While loop 3: 100
-While loop 4: 100
-While loop:  100
-For loop 2: 29
-For loop 4: 29
-For loop 6: 29
-For loop 8: 29
-For loop 10: 29
-For loop 12: 29
-For loop 14: 29
-For loop 16: 29
-For loop 18: 29
+While loop 0
+While loop 1
+While loop 2
+While loop 3
+While loop 4
+While loop:  110
+
+Single line comment found -> # For Loop with Step 2
+For loop 2
+For loop 4
+For loop 6
+For loop 8
+For loop 10
+For loop 12
+For loop 14
+For loop 16
+For loop 18
 For loop:  29
-No matching case found for value: 9
+
+Single line comment found -> # Switch Statement with Default Case
+No matching case found for value: 100
 Value of the default case: 7
 
 Main Function End

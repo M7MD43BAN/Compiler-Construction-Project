@@ -21,8 +21,9 @@
 
 /* bison declarations */
 
-%token NUM VAR IF ELSE MAIN INT FLOAT DOUBLE BOOL CHAR BRACKETSTART BRACKETEND FOR WHILE PRINT CASE DEFAULT SWITCH
+%token NUM VAR IF ELSE MAIN INT FLOAT DOUBLE CHAR BOOLEAN BRACKETSTART BRACKETEND FOR WHILE PRINT CASE DEFAULT SWITCH
 
+%right '='
 %left '<' '>'
 %left '+' '-'
 %left '*' '/'
@@ -31,11 +32,11 @@
 
 %%
 
-program: MAIN '('  ')' BRACKETSTART line BRACKETEND
+program: MAIN '('  ')' BRACKETSTART body BRACKETEND
 	;
 
-line: /* NULL */
-	| line statement
+body: /* NULL */
+	| body statement
 	;
 statement: ';'
 	| declaration ';'
@@ -50,7 +51,7 @@ statement: ';'
 	| WHILE '(' NUM '<' NUM ')' BRACKETSTART statement BRACKETEND  {
 		int i;
 		for (i = $3; i < $5; i++) {
-			fprintf(yyout, "While loop %d: %d\n", i, $8);
+			fprintf(yyout, "While loop %d\n", i);
 		}
 		fprintf(yyout, "While loop:  %d\n", $8);
 	}
@@ -71,7 +72,7 @@ statement: ';'
 		}
 	}
 	| PRINT '(' expression ')' ';'	{
-		fprintf(yyout, "\nPrint %d\n", $3);
+		fprintf(yyout, "Print %d\n", $3);
 	}
 	| SWITCH '(' NUM ')' BRACKETSTART SWITCHCASE BRACKETEND {
 		int switchValue = $3;
@@ -97,7 +98,7 @@ statement: ';'
 	| FOR '(' NUM ',' NUM ',' NUM ')' BRACKETSTART statement BRACKETEND	{
 		int i;
 		for (i = $3; i < $5; i = i + $7) {
-			fprintf(yyout, "For loop %d: %d\n", i, $10);
+			fprintf(yyout, "For loop %d\n", i);
 		}
 		fprintf(yyout, "For loop:  %d\n", $10);
 	}
@@ -110,12 +111,11 @@ TYPE: INT   	{ fprintf(yyout, "\ninterger declaration: "); }
 	 | FLOAT  	{ fprintf(yyout, "\nfloat declaration: "); }
 	 | CHAR   	{ fprintf(yyout, "\nchar declaration: "); }
 	 | DOUBLE 	{ fprintf(yyout, "\ndouble declaration: "); }
-	 | BOOL   	{ fprintf(yyout, "\nbool declaration: "); }
+	 | BOOLEAN  { fprintf(yyout, "\nbool declaration: "); }
 ;
 
-ID1: ID1 ',' VAR
-    | VAR
-    ;
+ID1: VAR
+     ;
 
 SWITCHCASE: casegrammer
     | casegrammer defaultgrammer
@@ -155,8 +155,8 @@ expression: NUM                    { $$ = $1; }
             $$ = $1 / $3;
         }
         else {
-            $$ = 0;
 			yyerror("Error!, Division by 0!!");
+			YYABORT;
         }
     }
     | expression '%' expression    {
@@ -164,8 +164,8 @@ expression: NUM                    { $$ = $1; }
             $$ = $1 % $3;
         }
         else {
-            $$ = 0;
 			yyerror("Error!, Mod by 0!!");
+			YYABORT;
         }
     }
     | expression '^' expression    {
@@ -182,7 +182,7 @@ expression: NUM                    { $$ = $1; }
 %%
 
 void yyerror(char *s) {
-    printf("%s\n", s);
+    fprintf(yyError, "%s\n", s);
 }
 
 int yywrap() {
@@ -195,7 +195,7 @@ int main(void) {
     yyError = fopen("outputError.txt", "w");
 
     // Initialize switchCases array
-    switchCases = (SwitchCase *)malloc(1000 * sizeof(SwitchCase));
+    switchCases = (SwitchCase *)malloc(100 * sizeof(SwitchCase));
 
 	fprintf(yyout, "\nMain Function Start\n");
     yyparse();
@@ -206,6 +206,7 @@ int main(void) {
 
     fclose(yyin);
     fclose(yyout);
+	fclose(yyError);
 
     return 0;
 }

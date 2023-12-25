@@ -1,31 +1,24 @@
-/* Tokens */
-#ifndef YYTOKENTYPE
-#define YYTOKENTYPE
-  /* Put the tokens into the symbol table, so that GDB and other debuggers know about them. */
-  enum yytokentype {
-    NUM = 258,
-    VAR = 259,
-    IF = 260,
-    ELSE = 261,
-    MAIN = 262,
-    INT = 263,
-    FLOAT = 264,
-    DOUBLE = 265,
-    CHAR = 266,
-    BOOL = 267,
-    BRACKETSTART = 268,
-    BRACKETEND = 269,
-    FOR = 270,
-    WHILE = 271,
-    PRINT = 272,
-    CASE = 273,
-    DEFAULT = 274,
-    SWITCH = 275,
-    COMMENT = 276,
-  };
-#endif
-
 #ifndef YYSTYPE
 #define YYSTYPE int
 #endif
+/* Our tokens */
+#define NUM 258
+#define VAR 259
+#define IF 260
+#define ELSE 261
+#define MAIN 262
+#define INT 263
+#define FLOAT 264
+#define DOUBLE 265
+#define CHAR 266
+#define BOOLEAN 267
+#define BRACKETSTART 268
+#define BRACKETEND 269
+#define FOR 270
+#define WHILE 271
+#define PRINT 272
+#define CASE 273
+#define DEFAULT 274
+#define SWITCH 275
+
 extern YYSTYPE yylval;

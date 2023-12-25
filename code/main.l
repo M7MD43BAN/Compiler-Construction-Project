@@ -70,19 +70,19 @@ SYMBOLS		[-+/*<>=,():;%^]
 "CHAR" 		     	{ return CHAR; }
 "FLOAT"			 	{ return FLOAT; }
 "DOUBLE"			{ return DOUBLE; }
-"BOOL"              { return BOOL; }
+"BOOLEAN"           { return BOOLEAN; }
 "Main"	   			{ return MAIN; }
 
 {DIGIT}+   		    {   /* integers */
 						yylval = atoi(yytext);
 						return NUM;
 					}
-{COMMENT}           { fprintf(yyout, "\nSingle line comment found :: "); ECHO; }
+{COMMENT}           { fprintf(yyout, "\nSingle line comment found -> "); ECHO; }
 
 {SYMBOLS}    		{ yylval = yytext[0]; return *yytext; }
 
 {VARIABLE}			{ 	ECHO;/* variables */
-						if(getValueFromMap(yytext)==-1) {
+						if(getValueFromMap(yytext) == -1) {
 								addToMap(yytext, num_of_v);
 								yylval = num_of_v;
 								num_of_v++;

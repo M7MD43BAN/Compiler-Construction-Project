@@ -2,15 +2,27 @@
 # This program is written by Mohamed Shaban
 
 Main() {
+	# Print Function
 	PRINT(5);
+	# Arthimetic Operations
+	PRINT((5 + 2) * 3);
+	PRINT(5 + 2 * 3);
+	# PRINT(5 / 0);
+	# PRINT(5 % 0);
+	PRINT(5 ^ 2);
+	PRINT(5 > 2);
+	PRINT(5 < 2);
+
+	# Variable Declaration and Assignment
 	number1 = 5;
-	number2 = 10;
-	CHAR character;
+	Number2 = 10;
 	INT number3;
 	DOUBLE number4;
 	FLOAT number5;
-	BOOL boolean1;
+	BOOLEAN flag;
+	CHAR abc;
 
+	# If Else Statement
 	IF(5 < 2)
 	{
 		15 - 30;
@@ -20,6 +32,7 @@ Main() {
 		20 + 9;
 	}
 
+	# If Statement
 	IF(13 < 28)
 	{
 		100 - 1;
@@ -27,15 +40,17 @@ Main() {
 
 	WHILE (0 < 5)
 	{
-		99 + 1;
+		99 + 11;
 	}
 
+	# For Loop with Step 2
 	FOR (2, 20, 2)
 	{
 		23 + 6;
 	}
 
-	SWITCH (9)
+	# Switch Statement with Default Case
+	SWITCH (100)
 	{
 		CASE 1 : 10 + 20;
 
